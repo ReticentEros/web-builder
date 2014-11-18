@@ -15,9 +15,13 @@ Modify app/package.json for Node-Webkit encapsulation.
 Use `grunt watch` for style auto-build and auto-reload.
 
 Put image files into app/images.
+
 Put scss files into app/styles.
+
 Put global js files into app/scripts.
+
 Put html files and page dependent scripts into app/views.
+
 Modify index.html & index.js.
 
 Enjoy yourself.
