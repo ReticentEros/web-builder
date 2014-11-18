@@ -40,15 +40,21 @@ Install [node](http://nodejs.org/).
 ### Install following once
 
 > npm install -g yo
+
 > npm install -g bower
+
 > npm install -g grunt-cli
+
 > npm install -g generator-node-webkit
 
 ### Install following per project
 
 > yo node-webkit
+
 > npm install --save-dev grunt-contrib-watch
+
 > npm install --save-dev grunt-contrib-sass
+
 > npm install --save-dev grunt-autoprefixer
 
 Modify Gruntfile.js for style building task.
