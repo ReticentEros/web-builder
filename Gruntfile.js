@@ -12,7 +12,8 @@ module.exports = function (grunt) {
     app: 'app',
     dist: 'dist',
     tmp: 'tmp',
-    resources: 'resources'
+    resources: 'resources',
+    package: grunt.file.readJSON('package.json')
   };
 
   grunt.initConfig({
@@ -137,7 +138,7 @@ module.exports = function (grunt) {
       },
       finalWindowsApp: {
         options: {
-          archive: '<%= config.dist %>/EBoxUI.zip'
+          archive: '<%= config.dist %>/<%= config.package.name %>.zip'
         },
         files: [{
           expand: true,
@@ -150,7 +151,7 @@ module.exports = function (grunt) {
       app: {
         files: [{
           src: '<%= config.dist %>/node-webkit.app',
-          dest: '<%= config.dist %>/EBoxUI.app'
+          dest: '<%= config.dist %>/<%= config.package.name %>.app'
         }]
       },
       zipToApp: {
@@ -164,10 +165,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('chmod', 'Add lost Permissions.', function () {
     var fs = require('fs');
-    fs.chmodSync('dist/EBoxUI.app/Contents/Frameworks/node-webkit Helper EH.app/Contents/MacOS/node-webkit Helper EH', '555');
-    fs.chmodSync('dist/EBoxUI.app/Contents/Frameworks/node-webkit Helper NP.app/Contents/MacOS/node-webkit Helper NP', '555');
-    fs.chmodSync('dist/EBoxUI.app/Contents/Frameworks/node-webkit Helper.app/Contents/MacOS/node-webkit Helper', '555');
-    fs.chmodSync('dist/EBoxUI.app/Contents/MacOS/node-webkit', '555');
+    fs.chmodSync('dist/<%= config.package.name %>.app/Contents/Frameworks/node-webkit Helper EH.app/Contents/MacOS/node-webkit Helper EH', '555');
+    fs.chmodSync('dist/<%= config.package.name %>.app/Contents/Frameworks/node-webkit Helper NP.app/Contents/MacOS/node-webkit Helper NP', '555');
+    fs.chmodSync('dist/<%= config.package.name %>.app/Contents/Frameworks/node-webkit Helper.app/Contents/MacOS/node-webkit Helper', '555');
+    fs.chmodSync('dist/<%= config.package.name %>.app/Contents/MacOS/node-webkit', '555');
   });
 
   grunt.registerTask('createLinuxApp', 'Create linux distribution.', function (version) {
@@ -190,13 +191,33 @@ module.exports = function (grunt) {
     });
   });
 
+  grunt.registerTask('createArmhfApp', 'Create ARMhf distribution.', function () {
+    var done = this.async();
+    var childProcess = require('child_process');
+    var exec = childProcess.exec;
+    exec('mkdir -p ./dist; cp resources/node-webkit/armhf/nw.pak dist/ && cp resources/node-webkit/armhf/nw dist/node-webkit', function (error, stdout, stderr) {
+      var result = true;
+      if (stdout) {
+        grunt.log.write(stdout);
+      }
+      if (stderr) {
+        grunt.log.write(stderr);
+      }
+      if (error !== null) {
+        grunt.log.error(error);
+        result = false;
+      }
+      done(result);
+    });
+  });
+
   grunt.registerTask('createWindowsApp', 'Create windows distribution.', function () {
     var done = this.async();
     var concat = require('concat-files');
     concat([
       'tmp/nw.exe',
       'tmp/app.nw'
-    ], 'tmp/EBoxUI.exe', function () {
+    ], 'tmp/<%= config.package.name %>.exe', function () {
       var fs = require('fs');
       fs.unlink('tmp/app.nw', function (error, stdout, stderr) {
         if (stdout) {
@@ -269,6 +290,14 @@ module.exports = function (grunt) {
     'createLinuxApp:Linux32'
   ]);
 
+  grunt.registerTask('dist-armhf', [
+    'jshint',
+    'clean:dist',
+    'copy:appLinux',
+    'createArmhfApp'
+  ]);
+
+
   grunt.registerTask('dist-win', [
     'jshint',
     'clean:dist',
@@ -294,7 +323,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dmg', 'Create dmg from previously created app folder in dist.', function () {
     var done = this.async();
-    var createDmgCommand = 'resources/mac/package.sh "EBoxUI"';
+    var createDmgCommand = 'resources/mac/package.sh "<%= config.package.name %>"';
     require('child_process').exec(createDmgCommand, function (error, stdout, stderr) {
       var result = true;
       if (stdout) {
