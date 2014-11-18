@@ -1,0 +1,15 @@
+{
+  "name": "",
+  "main": "index.html",
+  "version": "0.0.1",
+  "single-instance": true,
+  "window": {
+    "title": "",
+    "width": 1080,
+    "height": 1920,
+    "min_width": 540,
+    "min_height": 960,
+    "toolbar": false
+  },
+  "chromium-args": "--child-clean-exit"
+}
