@@ -21,6 +21,8 @@ Copy following into your project folder
 
 Do `npm install` and `bower install` if dependent packages are not installed.
 
+Use `bower install --save <package>` to install front-end packages, ex: jquery.
+
 Modify `app/package.json` for your Node-Webkit app.
 
 Use `grunt watch` for style auto-build and auto-reload.
