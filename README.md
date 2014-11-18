@@ -21,7 +21,7 @@ Copy following into your project folder
 
 Do `npm install` and `bower install` if dependent packages are not installed.
 
-Modify app/package.json for your Node-Webkit app.
+Modify `app/package.json` for your Node-Webkit app.
 
 Use `grunt watch` for style auto-build and auto-reload.
 
