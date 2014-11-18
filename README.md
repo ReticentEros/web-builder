@@ -1,28 +1,35 @@
 # Web Builder
 
 - Contain a generic web template
-
 - Include Node-Webkit for app encapsulation
-
 - Use Grunt and Bower to help manage project (build by Yeoman)
-
 - Use grunt-contrib-sass and grunt-autoprefixer for prefix free style
 
 ## How to use it
 
-Modify app/package.json for Node-Webkit encapsulation.
+Copy following into your project folder
+
+- `app`
+- `resources`
+- `tmp`
+- `.editorconfig`
+- `.gitignore`
+- `.jshintrc`
+- `bower.json`
+- `Gruntfile.js`
+- `package.json`
+
+Do `npm install` and `bower install` if dependent packages are not installed.
+
+Modify app/package.json for your Node-Webkit app.
 
 Use `grunt watch` for style auto-build and auto-reload.
 
-Put image files into app/images.
-
-Put scss files into app/styles.
-
-Put global js files into app/scripts.
-
-Put html files and page dependent scripts into app/views.
-
-Modify index.html & index.js.
+- `app/views` for html files and page dependent scripts
+- `app/scripts` for scripts
+- `app/styles` for scss/sacc & css files
+- `app/images` for image files
+- `index.html` for app launch entrance
 
 Enjoy yourself.
 
