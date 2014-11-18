@@ -11,7 +11,6 @@ Copy following into your project folder
 
 - `app`
 - `resources`
-- `tmp`
 - `.editorconfig`
 - `.gitignore`
 - `.jshintrc`
@@ -22,6 +21,8 @@ Copy following into your project folder
 Do `npm install` and `bower install` if dependent packages are not installed.
 
 Use `bower install --save <package>` to install front-end packages, ex: jquery.
+
+Modify `name` in `package.json` for your app name.
 
 Modify `app/package.json` for your Node-Webkit app.
 
@@ -59,11 +60,13 @@ Install [node](http://nodejs.org/).
 
 > npm install --save-dev grunt-autoprefixer
 
-Modify Gruntfile.js for style building task.
+Modify Gruntfile.js for your development.
 
 Modify app/package.json for your Node-Webkit app.
 
 ### Do following if packages were not installed
+
+Use `npm install --save-dev <package>` to install dev packages.
 
 > bower install
 
