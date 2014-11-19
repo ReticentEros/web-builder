@@ -38,7 +38,7 @@ Enjoy yourself.
 
 ## How to build it.
 
-Install [node](http://nodejs.org/).
+Install [Node](http://nodejs.org/).
 
 ### Install following once
 
