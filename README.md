@@ -62,6 +62,8 @@ Install [node](http://nodejs.org/).
 
 Modify Gruntfile.js for your development.
 
+Modify `name` in `package.json` for your app name.
+
 Modify app/package.json for your Node-Webkit app.
 
 ### Do following if packages were not installed
