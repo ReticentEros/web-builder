@@ -195,7 +195,7 @@ module.exports = function (grunt) {
     var done = this.async();
     var childProcess = require('child_process');
     var exec = childProcess.exec;
-    exec('mkdir -p ./dist; cp resources/node-webkit/armhf/nw.pak dist/ && cp resources/node-webkit/armhf/nw dist/node-webkit', function (error, stdout, stderr) {
+    exec('mkdir -p ./dist; cp resources/node-webkit/ARMhf/nw.pak dist/ && cp resources/node-webkit/ARMhf/nw dist/node-webkit', function (error, stdout, stderr) {
       var result = true;
       if (stdout) {
         grunt.log.write(stdout);
