@@ -11,6 +11,7 @@ Copy following into your project folder
 
 - `app`
 - `resources`
+- `.bowerrc`
 - `.editorconfig`
 - `.gitignore`
 - `.jshintrc`
