@@ -2,7 +2,9 @@
 .idea
 .log
 .sass-cache
-node_modules
-bower_components
-tmp
-app/plugins
+app/plugins/
+bower_components/
+buildTmp/
+dist/
+node_modules/
+tmp/
