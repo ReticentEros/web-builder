@@ -11,7 +11,13 @@ module.exports = function (grunt) {
   var config = {
     app: 'app',
     dist: 'dist',
-    tmp: 'tmp',
+    distMac32: 'dist/MacOS32',
+    distMac64: 'dist/MacOS64',
+    distLinux32: 'dist/Linux32',
+    distLinux64: 'dist/Linux64',
+    distLinuxARMhf: 'dist/LinuxARMhf',
+    distWin: 'dist/Win',
+    tmp: 'buildTmp',
     resources: 'resources',
     package: grunt.file.readJSON('package.json')
   };
@@ -66,6 +72,68 @@ module.exports = function (grunt) {
             '<%= config.tmp %>/*'
           ]
         }]
+      },
+      distMac32: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= config.distMac32 %>/*',
+            '<%= config.tmp %>/*'
+          ]
+        }]
+      },
+      distMac64: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= config.distMac64 %>/*',
+            '<%= config.tmp %>/*'
+          ]
+        }]
+      },
+      distLinux64: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= config.distLinux64 %>/*',
+            '<%= config.tmp %>/*'
+          ]
+        }]
+      },
+      distLinux32: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= config.distLinux32 %>/*',
+            '<%= config.tmp %>/*'
+          ]
+        }]
+      },
+      distLinuxARMhf: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= config.distLinuxARMhf %>/*',
+            '<%= config.tmp %>/*'
+          ]
+        }]
+      },
+      distWin: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= config.distWin %>/*',
+            '<%= config.tmp %>/*'
+          ]
+        }]
+      },
+      tmp: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= config.tmp %>/*'
+          ]
+        }]
       }
     },
     jshint: {
@@ -79,40 +147,89 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= config.app %>',
-          dest: '<%= config.dist %>/app.nw',
+          dest: '<%= config.distLinux64 %>/app.nw',
           src: '**'
         }]
       },
-      appMacos: {
+      appLinux32: {
         files: [{
           expand: true,
           cwd: '<%= config.app %>',
-          dest: '<%= config.dist %>/node-webkit.app/Contents/Resources/app.nw',
+          dest: '<%= config.distLinux32 %>/app.nw',
+          src: '**'
+        }]
+      },
+      appLinuxARMhf: {
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>',
+          dest: '<%= config.distLinuxARMhf %>/app.nw',
+          src: '**'
+        }]
+      },
+      appMacos32: {
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>',
+          dest: '<%= config.distMac32 %>/node-webkit.app/Contents/Resources/app.nw',
           src: '**'
         }, {
           expand: true,
           cwd: '<%= config.resources %>/mac/',
-          dest: '<%= config.dist %>/node-webkit.app/Contents/',
+          dest: '<%= config.distMac32 %>/node-webkit.app/Contents/',
           filter: 'isFile',
           src: '*.plist'
         }, {
           expand: true,
           cwd: '<%= config.resources %>/mac/',
-          dest: '<%= config.dist %>/node-webkit.app/Contents/Resources/',
+          dest: '<%= config.distMac32 %>/node-webkit.app/Contents/Resources/',
           filter: 'isFile',
           src: '*.icns'
         }, {
           expand: true,
-          cwd: '/../node_modules/',
-          dest: '/node-webkit.app/Contents/Resources/app.nw/node_modules/',
+          cwd: '<%= config.app %>/../node_modules/',
+          dest: '<%= config.distMac32 %>/node-webkit.app/Contents/Resources/app.nw/node_modules/',
           src: '**'
         }]
       },
-      webkit: {
+      appMacos64: {
         files: [{
           expand: true,
-          cwd: '<%=config.resources %>/node-webkit/MacOS',
-          dest: '<%= config.dist %>/',
+          cwd: '<%= config.app %>',
+          dest: '<%= config.distMac64 %>/node-webkit.app/Contents/Resources/app.nw',
+          src: '**'
+        }, {
+          expand: true,
+          cwd: '<%= config.resources %>/mac/',
+          dest: '<%= config.distMac64 %>/node-webkit.app/Contents/',
+          filter: 'isFile',
+          src: '*.plist'
+        }, {
+          expand: true,
+          cwd: '<%= config.resources %>/mac/',
+          dest: '<%= config.distMac64 %>/node-webkit.app/Contents/Resources/',
+          filter: 'isFile',
+          src: '*.icns'
+        }, {
+          expand: true,
+          cwd: '<%= config.app %>/../node_modules/',
+          dest: '<%= config.distMac64 %>/node-webkit.app/Contents/Resources/app.nw/node_modules/',
+          src: '**'
+        }]
+      },
+      webkit32: {
+        files: [{
+          expand: true,
+          cwd: '<%=config.resources %>/node-webkit/MacOS32',
+          dest: '<%= config.distMac32 %>/',
+          src: '**'
+        }]
+      },
+      webkit64: {
+        files: [{
+          expand: true,
+          cwd: '<%=config.resources %>/node-webkit/MacOS64',
+          dest: '<%= config.distMac64 %>/',
           src: '**'
         }]
       },
@@ -138,7 +255,7 @@ module.exports = function (grunt) {
       },
       finalWindowsApp: {
         options: {
-          archive: '<%= config.dist %>/<%= config.package.name %>.zip'
+          archive: '<%= config.distWin %>/<%= config.package.name %>.zip'
         },
         files: [{
           expand: true,
@@ -148,10 +265,16 @@ module.exports = function (grunt) {
       }
     },
     rename: {
-      app: {
+      macApp32: {
         files: [{
-          src: '<%= config.dist %>/node-webkit.app',
-          dest: '<%= config.dist %>/<%= config.package.name %>.app'
+          src: '<%= config.distMac32 %>/node-webkit.app',
+          dest: '<%= config.distMac32 %>/<%= config.package.name %>.app'
+        }]
+      },
+      macApp64: {
+        files: [{
+          src: '<%= config.distMac64 %>/node-webkit.app',
+          dest: '<%= config.distMac64 %>/<%= config.package.name %>.app'
         }]
       },
       zipToApp: {
@@ -163,39 +286,30 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('chmod', 'Add lost Permissions.', function () {
-    var fs = require('fs');
-    fs.chmodSync('dist/<%= config.package.name %>.app/Contents/Frameworks/node-webkit Helper EH.app/Contents/MacOS/node-webkit Helper EH', '555');
-    fs.chmodSync('dist/<%= config.package.name %>.app/Contents/Frameworks/node-webkit Helper NP.app/Contents/MacOS/node-webkit Helper NP', '555');
-    fs.chmodSync('dist/<%= config.package.name %>.app/Contents/Frameworks/node-webkit Helper.app/Contents/MacOS/node-webkit Helper', '555');
-    fs.chmodSync('dist/<%= config.package.name %>.app/Contents/MacOS/node-webkit', '555');
+  grunt.registerTask('chmod32', 'Add lost Permissions.', function () {
+    var fs = require('fs'),
+        path = config.distMac32 + '/' + config.package.name + '.app/Contents/';
+    fs.chmodSync(path + 'Frameworks/node-webkit Helper EH.app/Contents/MacOS/node-webkit Helper EH', '555');
+    fs.chmodSync(path + 'Frameworks/node-webkit Helper NP.app/Contents/MacOS/node-webkit Helper NP', '555');
+    fs.chmodSync(path + 'Frameworks/node-webkit Helper.app/Contents/MacOS/node-webkit Helper', '555');
+    fs.chmodSync(path + 'MacOS/node-webkit', '555');
+  });
+
+  grunt.registerTask('chmod64', 'Add lost Permissions.', function () {
+    var fs = require('fs'),
+        path = config.distMac64 + '/' + config.package.name + '.app/Contents/';
+    fs.chmodSync(path + 'Frameworks/node-webkit Helper EH.app/Contents/MacOS/node-webkit Helper EH', '555');
+    fs.chmodSync(path + 'Frameworks/node-webkit Helper NP.app/Contents/MacOS/node-webkit Helper NP', '555');
+    fs.chmodSync(path + 'Frameworks/node-webkit Helper.app/Contents/MacOS/node-webkit Helper', '555');
+    fs.chmodSync(path + 'MacOS/node-webkit', '555');
   });
 
   grunt.registerTask('createLinuxApp', 'Create linux distribution.', function (version) {
     var done = this.async();
     var childProcess = require('child_process');
     var exec = childProcess.exec;
-    exec('mkdir -p ./dist; cp resources/node-webkit/'+ version +'/nw.pak dist/ && cp resources/node-webkit/'+ version +'/nw dist/node-webkit', function (error, stdout, stderr) {
-      var result = true;
-      if (stdout) {
-        grunt.log.write(stdout);
-      }
-      if (stderr) {
-        grunt.log.write(stderr);
-      }
-      if (error !== null) {
-        grunt.log.error(error);
-        result = false;
-      }
-      done(result);
-    });
-  });
-
-  grunt.registerTask('createArmhfApp', 'Create ARMhf distribution.', function () {
-    var done = this.async();
-    var childProcess = require('child_process');
-    var exec = childProcess.exec;
-    exec('mkdir -p ./dist; cp resources/node-webkit/ARMhf/nw.pak dist/ && cp resources/node-webkit/ARMhf/nw dist/node-webkit', function (error, stdout, stderr) {
+    var path = './' + config['dist' + version];
+    exec('mkdir -p ' + path + '; cp resources/node-webkit/' + version + '/nw.pak ' + path + ' && cp resources/node-webkit/' + version + '/nw ' + path + '/node-webkit', function (error, stdout, stderr) {
       var result = true;
       if (stdout) {
         grunt.log.write(stdout);
@@ -215,11 +329,11 @@ module.exports = function (grunt) {
     var done = this.async();
     var concat = require('concat-files');
     concat([
-      'tmp/nw.exe',
-      'tmp/app.nw'
-    ], 'tmp/<%= config.package.name %>.exe', function () {
+      'buildTmp/nw.exe',
+      'buildTmp/app.nw'
+    ], 'buildTmp/' + config.package.name + '.exe', function () {
       var fs = require('fs');
-      fs.unlink('tmp/app.nw', function (error, stdout, stderr) {
+      fs.unlink('buildTmp/app.nw', function (error, stdout, stderr) {
         if (stdout) {
           grunt.log.write(stdout);
         }
@@ -230,7 +344,7 @@ module.exports = function (grunt) {
           grunt.log.error(error);
           done(false);
         } else {
-          fs.unlink('tmp/nw.exe', function (error, stdout, stderr) {
+          fs.unlink('buildTmp/nw.exe', function (error, stdout, stderr) {
             var result = true;
             if (stdout) {
               grunt.log.write(stdout);
@@ -278,43 +392,57 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dist-linux', [
     'jshint',
-    'clean:dist',
+    'clean:distLinux64',
     'copy:appLinux',
-    'createLinuxApp:Linux64'
+    'createLinuxApp:Linux64',
+    'clean:tmp'
   ]);
 
   grunt.registerTask('dist-linux32', [
     'jshint',
-    'clean:dist',
-    'copy:appLinux',
-    'createLinuxApp:Linux32'
+    'clean:distLinux32',
+    'copy:appLinux32',
+    'createLinuxApp:Linux32',
+    'clean:tmp'
   ]);
 
-  grunt.registerTask('dist-armhf', [
+  grunt.registerTask('dist-linux-armhf', [
     'jshint',
-    'clean:dist',
-    'copy:appLinux',
-    'createArmhfApp'
+    'clean:distLinuxARMhf',
+    'copy:appLinuxARMhf',
+    'createLinuxApp:LinuxARMhf',
+    'clean:tmp'
   ]);
-
 
   grunt.registerTask('dist-win', [
     'jshint',
-    'clean:dist',
+    'clean:distWin',
     'copy:copyWinToTmp',
     'compress:appToTmp',
     'rename:zipToApp',
     'createWindowsApp',
-    'compress:finalWindowsApp'
+    'compress:finalWindowsApp',
+    'clean:tmp'
   ]);
 
   grunt.registerTask('dist-mac', [
     'jshint',
-    'clean:dist',
-    'copy:webkit',
-    'copy:appMacos',
-    'rename:app',
-    'chmod'
+    'clean:distMac64',
+    'copy:webkit64',
+    'copy:appMacos64',
+    'rename:macApp64',
+    'chmod64',
+    'clean:tmp'
+  ]);
+
+  grunt.registerTask('dist-mac32', [
+    'jshint',
+    'clean:distMac32',
+    'copy:webkit32',
+    'copy:appMacos32',
+    'rename:macApp32',
+    'chmod32',
+    'clean:tmp'
   ]);
 
   grunt.registerTask('check', [

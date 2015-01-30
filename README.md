@@ -1,7 +1,7 @@
 # Web Builder
 
 - Contain a generic web template
-- Include Node-Webkit for app encapsulation
+- Include NW for app encapsulation
 - Use Grunt and Bower to help manage project (build by Yeoman)
 - Use grunt-contrib-sass and grunt-autoprefixer for prefix free style
 
@@ -9,12 +9,12 @@
 
 Copy following into your project folder
 
-- `app`
-- `resources`
 - `.bowerrc`
 - `.editorconfig`
 - `.gitignore`
 - `.jshintrc`
+- `app`
+- `resources`
 - `bower.json`
 - `Gruntfile.js`
 - `package.json`
@@ -37,7 +37,16 @@ Use `grunt watch` for style auto-build and auto-reload.
 
 Enjoy yourself.
 
-## How to build it.
+## NW version
+
+This uses NW v0.11.6 for most platforms (Linux 64/32, Mac 64/32 and Windows 32) and NW v0.7.1 for Linux ARMhf.  
+Please see following for more information
+
+- [http://dl.nwjs.io/](http://dl.nwjs.io/)
+- [https://github.com/toxygen/armhf-node-webkit](https://github.com/toxygen/armhf-node-webkit)
+- [https://github.com/nwjs/nw.js/issues/1151](https://github.com/nwjs/nw.js/issues/1151)
+
+## How to build it
 
 Install [Node](http://nodejs.org/).
 
