@@ -24,6 +24,12 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     config: config,
+    connect: {
+      watch: {
+        port: 8000,
+        base: 'app'
+      }
+    },
     autoprefixer: {
       watch: {
         expand: true,
@@ -60,15 +66,6 @@ module.exports = function (grunt) {
         tasks: [],
         options: {
           livereload: true
-        }
-      }
-    },
-    connect: {
-      server: {
-        options: {
-          base: 'app',
-          keepalive: true,
-          useAvailablePort: true
         }
       }
     },
@@ -294,6 +291,8 @@ module.exports = function (grunt) {
       }
     }
   });
+
+  grunt.registerTask('serve', ['connect:watch', 'watch']);
 
   grunt.registerTask('chmod32', 'Add lost Permissions.', function () {
     var fs = require('fs'),
