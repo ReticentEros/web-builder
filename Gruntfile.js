@@ -26,8 +26,10 @@ module.exports = function (grunt) {
     config: config,
     connect: {
       watch: {
-        port: 8000,
-        base: 'app'
+        options: {
+          port: 8000,
+          base: config.app
+        }
       }
     },
     autoprefixer: {
