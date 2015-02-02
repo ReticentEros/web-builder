@@ -63,6 +63,15 @@ module.exports = function (grunt) {
         }
       }
     },
+    connect: {
+      server: {
+        options: {
+          base: 'app',
+          keepalive: true,
+          useAvailablePort: true
+        }
+      }
+    },
     clean: {
       dist: {
         files: [{
