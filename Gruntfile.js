@@ -371,7 +371,7 @@ module.exports = function (grunt) {
     });
   });
 
-  grunt.registerTask('conf-name', 'Configure name to all needed files', function (name) {
+  grunt.registerTask('conf-name', 'Configure name to all needed files', function (name, version) {
     var config = grunt.config.get(['config']);
     var appPath = config.app;
     var resourcesPath = config.resources;
@@ -380,13 +380,17 @@ module.exports = function (grunt) {
     var infoPlistTmp = grunt.file.read(resourcesPath + '/mac/Info.plist.tmp', {
       encoding: 'UTF8'
     });
+    version = version || mainPackageJSON.version || '0.0.0';
     var infoPlist = grunt.template.process(infoPlistTmp, {
       data: {
-        name: name
+        name: name,
+        version: version
       }
     });
     mainPackageJSON.name = name;
+    mainPackageJSON.version = version;
     appPackageJSON.name = name;
+    appPackageJSON.version = version;
     grunt.file.write('package.json', JSON.stringify(mainPackageJSON, null, 2), {
       encoding: 'UTF8'
     });
@@ -409,6 +413,7 @@ module.exports = function (grunt) {
     });
     var infoPlist = grunt.template.process(infoPlistTmp, {
       data: {
+        name: mainPackageJSON.name,
         version: version
       }
     });

@@ -2,7 +2,6 @@
 .idea
 .log
 .sass-cache
-app/plugins/
 bower_components/
 buildTmp/
 dist/
