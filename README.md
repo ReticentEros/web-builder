@@ -1,22 +1,22 @@
 # Web Builder
 
-- Contain a generic web template  
-- Include NW for app encapsulation  
-- Use Grunt and Bower to help manage project (build by Yeoman)  
-- Use grunt-contrib-sass and grunt-autoprefixer for prefix free style  
+- Contain a generic web template
+- Include NW for app encapsulation
+- Use Grunt and Bower to help manage project (build by Yeoman)
+- Use grunt-contrib-sass and grunt-autoprefixer for prefix free style
 
 ## How to use it
 
 Copy following into your project folder
 
-- `.editorconfig`  
-- `.gitignore`  
-- `.jshintrc`  
-- `app`  
-- `resources`  
-- `bower.json`  
-- `Gruntfile.js`  
-- `package.json`  
+- `.editorconfig`
+- `.gitignore`
+- `.jshintrc`
+- `app`
+- `resources`
+- `bower.json`
+- `Gruntfile.js`
+- `package.json`
 
 Do `npm install` and `bower install` if dependencies are not existed.
 
