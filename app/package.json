@@ -1,4 +1,5 @@
 {
   "main": "app://localhost/index.html",
-  "name": "web-builder"
+  "name": "WebBuilder",
+  "version": "0.0.0"
 }

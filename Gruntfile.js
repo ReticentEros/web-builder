@@ -294,8 +294,6 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('serve', ['connect:watch', 'watch']);
-
   grunt.registerTask('chmod32', 'Add lost Permissions.', function () {
     var fs = require('fs'),
         path = config.distMac32 + '/' + config.package.name + '.app/Contents/';
@@ -373,7 +371,34 @@ module.exports = function (grunt) {
     });
   });
 
-  grunt.registerTask('setVersion', 'Set version to all needed files', function (version) {
+  grunt.registerTask('conf-name', 'Configure name to all needed files', function (name) {
+    var config = grunt.config.get(['config']);
+    var appPath = config.app;
+    var resourcesPath = config.resources;
+    var mainPackageJSON = grunt.file.readJSON('package.json');
+    var appPackageJSON = grunt.file.readJSON(appPath + '/package.json');
+    var infoPlistTmp = grunt.file.read(resourcesPath + '/mac/Info.plist.tmp', {
+      encoding: 'UTF8'
+    });
+    var infoPlist = grunt.template.process(infoPlistTmp, {
+      data: {
+        name: name
+      }
+    });
+    mainPackageJSON.name = name;
+    appPackageJSON.name = name;
+    grunt.file.write('package.json', JSON.stringify(mainPackageJSON, null, 2), {
+      encoding: 'UTF8'
+    });
+    grunt.file.write(appPath + '/package.json', JSON.stringify(appPackageJSON, null, 2), {
+      encoding: 'UTF8'
+    });
+    grunt.file.write(resourcesPath + '/mac/Info.plist', infoPlist, {
+      encoding: 'UTF8'
+    });
+  });
+
+  grunt.registerTask('conf-version', 'Configure version to all needed files', function (version) {
     var config = grunt.config.get(['config']);
     var appPath = config.app;
     var resourcesPath = config.resources;
@@ -399,6 +424,11 @@ module.exports = function (grunt) {
       encoding: 'UTF8'
     });
   });
+
+  grunt.registerTask('serve', [
+    'connect:watch',
+    'watch'
+  ]);
 
   grunt.registerTask('dist-linux', [
     'jshint',
@@ -461,7 +491,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dmg', 'Create dmg from previously created app folder in dist.', function () {
     var done = this.async();
-    var createDmgCommand = 'resources/mac/package.sh "<%= config.package.name %>"';
+    var createDmgCommand = 'resources/mac/package.sh "' + config.package.name + '"';
     require('child_process').exec(createDmgCommand, function (error, stdout, stderr) {
       var result = true;
       if (stdout) {
