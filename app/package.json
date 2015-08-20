@@ -1,4 +1,15 @@
 {
-  "main": "app://localhost/index.html",
-  "name": "web-builder"
+  "name": "webbuilder",
+  "main": "index.html",
+  "single-instance": true,
+  "window": {
+    "title": "webBuilder",
+    "width": 650,
+    "height": 650,
+    "min_width": 650,
+    "min_height": 650,
+    "toolbar": false
+  },
+  "chromium-args": "--child-clean-exit",
+  "version": "1.0.0"
 }
